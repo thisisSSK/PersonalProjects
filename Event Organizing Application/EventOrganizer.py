@@ -7,12 +7,11 @@ edit, add, and delete events without directly changing the source code.
 
 from Tkinter import *
 
-
 class EventOrganizer(Frame):
 
     def __init__(self, master ):
-        # initialize dictionary for list of events
-        self.eventList = {}
+
+
         Frame.__init__(self,master)
 
         entryframe = Frame(root)
@@ -50,29 +49,37 @@ class EventOrganizer(Frame):
         buttonframe.pack()
         add = Button (buttonframe, text = " Add Event ", command = self.addEntry)
         edit = Button(buttonframe, text = " Edit Event ", command = self.editEntry)
-        ##delete = Button (buttonframe, text = " Delete ", command = self.deleteEntry())
-        ##sort = Button (buttonframe, text = " Sort Entries", command = self.sortEntrys())
+        delete = Button (buttonframe, text = " Delete ", command = self.deleteEntry)
+        ####sort = Button (buttonframe, text = " Sort Entries", command = self.sortEntrys())
         #   organizing buttons
         add.pack(side = LEFT) ; edit.pack(side = LEFT)
-        ##delete.pack(side = LEFT); sort.pack(side = LEFT)
+        delete.pack(side = LEFT);
+        ####sort.pack(side = LEFT)
 
 
     def addEntry(self):
         # add current entry into the dictionary of events and also inserts title of event into the listbox widget
-        self.eventList[self.timeVar.get()] = self.nameVar.get()
-        self.box.insert(END, [self.timeVar.get(),self.nameVar.get()])
+
+        self.box.insert(END, (self.timeVar.get() + ' - ' + self.nameVar.get()))
         print "Event Added!"
 
     def editEntry(self):
         # only edits the first item selected
         if bool(self.box.curselection()):
             index = self.box.curselection()[0]
-            # Edit entry in eventList
-            self.eventList[self.box.get(index)[0]] = self.nameVar.get()
-            self.eventList[self.timeVar.get()] = self.eventList.pop(self.box.get(index)[0])
+
+
             # deletes current entry in the listbox and adds the updated one
             self.box.delete(index)
             self.box.insert(index, [self.timeVar.get(), self.nameVar.get()])
+
+    def deleteEntry(self):
+        # get selected line
+        index = self.box.curselection()[0]
+        print index
+        print type(self.box.get(index))
+        self.box.delete(index)
+
 
 root = Tk()
 
