@@ -17,7 +17,7 @@ def run():
     # Login
     r = praw.Reddit(user_agent=bot)
     r.login(BOT_USERNAME, 'abc123')
-    subreddit = r.get_subreddit('LEGO')
+    subreddit = r.get_subreddit('TestBot')
 
     # List of comments bot has already replied to
     completed = []
@@ -29,8 +29,9 @@ def run():
             flatTreeOfComments = praw.helpers.flatten_tree(submission.comments)
 
             for comment in flatTreeOfComments:
+                print "new Comment:" + comment.body
                 if comment.id in completed:
-                    print "This comment is in completed! - " + comment.body
+                    print "We've already checked here!"
                     break
                 lbody = comment.body.lower()
 
@@ -42,11 +43,11 @@ def run():
                         if not reply.author:
                             continue
                         # if there is a reply with  the bot's name, then add to completed and dont reply
-                        if reply.author.name == BOT_USERNAME:
+                        if reply.author.name == unicode(BOT_USERNAME):
                             completed.append(comment.id)
                             print "I've already replied to this: " + reply.body
 
-                    # If bot has not replied to this comment
+                    # If bot has not replied to this commentx
                     if comment.id not in completed:
                         completed.append(comment.id)
                         # Try replying and catch comment-limit error.
