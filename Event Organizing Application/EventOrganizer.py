@@ -41,8 +41,6 @@ class EventOrganizer(Frame):
         # just organizing so scroll is on the right, and fill to adjust heigh/width to that of parent window
         scroll.pack(side=RIGHT, fill=Y)
         self.box.pack(side=LEFT, fill = BOTH, expand = 1)
-        print self.box
-
 
         # Buttons
         buttonframe = Frame(root)
